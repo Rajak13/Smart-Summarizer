@@ -1,0 +1,50 @@
+# Hugging Face Spaces ignore file
+# Exclude files not needed for deployment
+
+# Git files
+.git/
+.gitignore
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Development files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local development scripts
+install.sh
+install.bat
+run_webapp.sh
+run_webapp.bat
+prepare_hf_deployment.sh
+
+# Deployment configs for other platforms
+railway.json
+render.yaml
+docker-compose.yml
+deploy.sh
+Procfile
+
+# Documentation (keep only essential)
+HUGGINGFACE_DEPLOYMENT.md
+
+# Large files that aren't needed
+designs/
+*.png
+*.jpg
+*.jpeg
+
+# Logs
+logs/
+*.log

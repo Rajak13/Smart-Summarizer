@@ -21,12 +21,16 @@ COPY . .
 # Create necessary directories
 RUN mkdir -p uploads logs
 
-# Expose port
-EXPOSE 5001
+# Download NLTK data
+RUN python -c "import nltk; nltk.download('punkt'); nltk.download('punkt_tab'); nltk.download('stopwords')"
 
-# Set environment variables
+# Expose port for Hugging Face Spaces
+EXPOSE 7860
+
+# Set environment variables for Hugging Face Spaces
 ENV FLASK_ENV=production
 ENV PYTHONUNBUFFERED=1
+ENV PORT=7860
 
-# Run the application
-CMD ["gunicorn", "--chdir", "webapp", "app:app", "--bind", "0.0.0.0:5001", "--timeout", "120", "--workers", "2"]
+# Run the application on port 7860 for Hugging Face Spaces
+CMD ["gunicorn", "--chdir", "webapp", "app:app", "--bind", "0.0.0.0:7860", "--timeout", "120", "--workers", "2"]

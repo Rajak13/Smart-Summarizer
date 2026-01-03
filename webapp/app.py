@@ -257,8 +257,8 @@ def upload_file():
 if __name__ == '__main__':
     import os
     
-    # Get port from environment variable (for cloud deployment)
-    port = int(os.environ.get('PORT', 5001))
+    # Get port from environment variable (Hugging Face Spaces uses 7860)
+    port = int(os.environ.get('PORT', 7860))
     
     # Check if running in production
     debug = os.environ.get('FLASK_ENV') != 'production'

@@ -96,8 +96,15 @@ class TextRankSummarizer(BaseSummarizer):
         Returns:
             Tuple of (original_sentences, cleaned_sentences)
         """
-        # Split into sentences
-        sentences = sent_tokenize(text)
+        # Split into sentences with error handling for NLTK data
+        try:
+            sentences = sent_tokenize(text)
+        except LookupError:
+            logger.warning("NLTK punkt tokenizer not found. Downloading...")
+            import nltk
+            nltk.download('punkt')
+            nltk.download('punkt_tab')  # Download both punkt versions
+            sentences = sent_tokenize(text)
         
         # Filter out very short sentences
         filtered_sentences = [
@@ -111,8 +118,16 @@ class TextRankSummarizer(BaseSummarizer):
         # Clean sentences for similarity calculation
         cleaned_sentences = []
         for sent in filtered_sentences:
-            # Tokenize and lowercase
-            words = word_tokenize(sent.lower())
+            # Tokenize and lowercase with error handling
+            try:
+                words = word_tokenize(sent.lower())
+            except LookupError:
+                logger.warning("NLTK punkt tokenizer not found for word tokenization. Downloading...")
+                import nltk
+                nltk.download('punkt')
+                nltk.download('punkt_tab')
+                words = word_tokenize(sent.lower())
+            
             # Remove stopwords and non-alphanumeric tokens
             words = [w for w in words if w.isalnum() and w not in self.stop_words]
             cleaned_sentences.append(' '.join(words))
