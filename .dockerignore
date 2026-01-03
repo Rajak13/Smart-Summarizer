@@ -1,0 +1,62 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+# Virtual Environment
+.venv
+venv
+ENV
+env
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+!README.md
+!QUICK_START.md
+
+# Test files
+test_*.py
+*_test.py
+tests/
+
+# Notebooks
+notebooks/
+*.ipynb
+.ipynb_checkpoints
+
+# Data
+data/raw/
+data/processed/
+results/
+
+# Logs
+logs/
+*.log
+
+# Uploads (will be created in container)
+uploads/*
+
+# Development files
+.env
+.env.local

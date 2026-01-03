@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Summary - Smart Summarizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-navbar">
+        <a href="/" class="navbar-logo">
+            <div class="logo-circle">S</div>
+            <span>Smart Summarizer</span>
+        </a>
+        <div class="navbar-links">
+            <a href="/" class="nav-item">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="/single-summary" class="nav-item active">
+                <i class="fas fa-file-alt"></i> Single Summary
+            </a>
+            <a href="/comparison" class="nav-item">
+                <i class="fas fa-balance-scale"></i> Comparison
+            </a>
+            <a href="/batch" class="nav-item">
+                <i class="fas fa-layer-group"></i> Batch
+            </a>
+            <a href="/evaluation" class="nav-item">
+                <i class="fas fa-chart-bar"></i> Evaluation
+            </a>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="page-container">
+        <h1 class="page-title">Single Model Summary</h1>
+        <p class="page-subtitle">Input your text and select a specialized model to begin.</p>
+        
+        <div class="content-grid">
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="section-label">Input Text</div>
+                
+                <!-- Input Method Tabs -->
+                <div class="input-tabs">
+                    <button class="tab-btn active" onclick="switchTab('paste')">Paste Text</button>
+                    <button class="tab-btn" onclick="switchTab('upload')">Upload File</button>
+                </div>
+                
+                <!-- Paste Text Tab -->
+                <div id="paste-tab" class="tab-content active">
+                    <textarea 
+                        class="text-input" 
+                        id="inputText"
+                        placeholder="Paste your source text here..."
+                    ></textarea>
+                    <div class="char-count">
+                        <span id="charCount">0 characters</span>
+                        <span id="wordCount">0 words</span>
+                    </div>
+                </div>
+                
+                <!-- Upload File Tab -->
+                <div id="upload-tab" class="tab-content">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📄</div>
+                        <p>Drag and drop a file here or click to browse</p>
+                        <p class="upload-hint">Supported formats: .txt, .md, .pdf, .docx, .doc (Max 16MB)</p>
+                        <input type="file" id="fileInput" accept=".txt,.md,.pdf,.docx,.doc" style="display: none;">
+                    </div>
+                    <div id="fileInfo" class="file-info" style="display: none;">
+                        <span id="fileName"></span>
+                        <button class="btn-remove" onclick="removeFile()">Remove</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Output Section -->
+            <div class="output-section">
+                <div class="section-label">Output Preview</div>
+                <div class="output-preview" id="outputPreview">
+                    <div class="icon">✨</div>
+                    <div>Summary will appear here</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Controls -->
+        <div class="controls-section">
+            <select class="model-select" id="modelSelect">
+                <option value="bart">BART</option>
+                <option value="textrank">TextRank</option>
+                <option value="pegasus">PEGASUS</option>
+            </select>
+            
+            <button class="btn-generate" id="generateBtn">
+                Generate Summary
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-left">
+            <div class="logo-circle" style="width: 24px; height: 24px; font-size: 0.9rem;">S</div>
+            <span>Smart Summarizer</span>
+        </div>
+        <div class="footer-right">
+            <span>© 2025 Smart Summarizer. Abdul Razzaq Ansari</span>
+            <a href="https://github.com/Rajak13/Smart-Summarizer" target="_blank" class="footer-link">
+                <i class="fab fa-github"></i> GitHub Repository
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const inputText = document.getElementById('inputText');
+        const charCount = document.getElementById('charCount');
+        const wordCount = document.getElementById('wordCount');
+        const generateBtn = document.getElementById('generateBtn');
+        const modelSelect = document.getElementById('modelSelect');
+        const outputPreview = document.getElementById('outputPreview');
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+
+        // Tab switching
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            if (tab === 'paste') {
+                document.querySelector('.tab-btn:first-child').classList.add('active');
+                document.getElementById('paste-tab').classList.add('active');
+            } else {
+                document.querySelector('.tab-btn:last-child').classList.add('active');
+                document.getElementById('upload-tab').classList.add('active');
+            }
+        }
+
+        // Update character and word count
+        inputText.addEventListener('input', () => {
+            const text = inputText.value;
+            const chars = text.length;
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+            
+            charCount.textContent = `${chars} characters`;
+            wordCount.textContent = `${words} words`;
+        });
+
+        // File upload handling
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'var(--slate-blue)';
+            uploadArea.style.background = 'rgba(109, 129, 150, 0.05)';
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = 'var(--cool-gray)';
+            uploadArea.style.background = 'transparent';
+        });
+        
+        uploadArea.addEventListener('drop', async (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'var(--cool-gray)';
+            uploadArea.style.background = 'transparent';
+            
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                await handleFileUpload(file);
+            }
+        });
+        
+        fileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                await handleFileUpload(file);
+            }
+        });
+
+        async function handleFileUpload(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            try {
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    inputText.value = data.text;
+                    inputText.dispatchEvent(new Event('input'));
+                    
+                    fileName.textContent = `${data.filename} (${data.word_count} words)`;
+                    fileInfo.style.display = 'flex';
+                    uploadArea.style.display = 'none';
+                    
+                    // Switch to paste tab to show the text
+                    switchTab('paste');
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            } catch (error) {
+                alert('Failed to upload file. Please try again.');
+                console.error(error);
+            }
+        }
+
+        function removeFile() {
+            fileInput.value = '';
+            fileInfo.style.display = 'none';
+            uploadArea.style.display = 'flex';
+            inputText.value = '';
+            inputText.dispatchEvent(new Event('input'));
+        }
+
+        // Generate summary
+        generateBtn.addEventListener('click', async () => {
+            const text = inputText.value.trim();
+            const model = modelSelect.value;
+            
+            if (!text || text.split(/\s+/).length < 10) {
+                alert('Please enter at least 10 words of text');
+                return;
+            }
+            
+            // Show loading state
+            generateBtn.disabled = true;
+            generateBtn.textContent = 'Generating...';
+            outputPreview.innerHTML = '<div class="spinner"></div><div>Processing your text...</div>';
+            
+            try {
+                const response = await fetch('/api/summarize', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        text: text,
+                        model: model
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Display summary
+                    outputPreview.innerHTML = `
+                        <div class="output-text">
+                            <strong>Summary (${model.toUpperCase()}):</strong><br><br>
+                            ${data.summary}
+                            <br><br>
+                            <small style="color: var(--slate-blue);">
+                                Processing time: ${data.metadata.processing_time.toFixed(2)}s | 
+                                Compression: ${(data.metadata.compression_ratio * 100).toFixed(1)}%
+                            </small>
+                        </div>
+                    `;
+                } else {
+                    outputPreview.innerHTML = `
+                        <div style="color: #ef4444;">
+                            <strong>Error:</strong> ${data.error}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                outputPreview.innerHTML = `
+                    <div style="color: #ef4444;">
+                        <strong>Error:</strong> Failed to generate summary. Please try again.
+                    </div>
+                `;
+            } finally {
+                generateBtn.disabled = false;
+                generateBtn.textContent = 'Generate Summary';
+            }
+        });
+    </script>
+</body>
+</html>

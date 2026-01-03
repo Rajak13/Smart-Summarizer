@@ -1,0 +1,114 @@
+# Smart Summarizer Configuration
+# Professional settings for text summarization application
+
+# Application Settings
+app:
+  name: "Smart Summarizer"
+  version: "1.0.0"
+  author: "Abdul Razzaq Ansari"
+  student_id: "23049149"
+  module: "CU6051NI Artificial Intelligence"
+  institution: "London Metropolitan University"
+  
+# Model Configuration
+models:
+  textrank:
+    enabled: true
+    damping_factor: 0.85
+    max_iterations: 100
+    tolerance: 1e-4
+    summary_ratio: 0.3
+    min_sentence_length: 5
+    
+  bart:
+    enabled: true
+    model_name: "facebook/bart-large-cnn"
+    device: "cpu"  # Change to "cuda" if GPU available
+    max_input_length: 1024
+    max_summary_length: 150
+    min_summary_length: 50
+    num_beams: 4
+    length_penalty: 2.0
+    
+  pegasus:
+    enabled: true
+    model_name: "google/pegasus-cnn_dailymail"
+    device: "cpu"  # Change to "cuda" if GPU available
+    max_input_length: 1024
+    max_summary_length: 128
+    min_summary_length: 30
+    num_beams: 4
+    length_penalty: 2.0
+
+# Dataset Configuration
+dataset:
+  name: "cnn_dailymail"
+  version: "3.0.0"
+  test_samples: 50
+  cache_dir: "./data/cache"
+  
+# Evaluation Settings
+evaluation:
+  rouge_metrics:
+    - "rouge-1"
+    - "rouge-2"
+    - "rouge-l"
+  statistical_tests:
+    - "wilcoxon"
+    - "friedman"
+  significance_level: 0.05
+  
+# UI Configuration
+ui:
+  theme: "light"
+  page_title: "Smart Summarizer"
+  page_icon: "📚"
+  layout: "wide"
+  sidebar_state: "expanded"
+  
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/smart_summarizer.log"
+  
+# Performance Settings
+performance:
+  cache_models: true
+  batch_size: 8
+  max_workers: 4
+  timeout: 300  # seconds
+  
+# Export Settings
+export:
+  formats:
+    - "text"
+    - "json"
+    - "csv"
+    - "pdf"
+  default_format: "json"
+  
+# Sample Texts for Demo
+samples:
+  ai_technology: |
+    Artificial intelligence has revolutionized modern technology in unprecedented ways. 
+    Machine learning algorithms enable computers to learn from vast amounts of data without 
+    explicit programming. Deep learning neural networks, inspired by the human brain, can 
+    now recognize patterns in images, understand natural language, and even generate creative 
+    content. Natural language processing has advanced to the point where AI systems can 
+    engage in human-like conversations, translate between languages in real-time, and 
+    summarize lengthy documents automatically.
+    
+  climate_change: |
+    Climate change represents one of the most pressing challenges facing humanity in the 
+    21st century. Global temperatures have risen significantly over the past century, 
+    primarily due to increased greenhouse gas emissions from human activities. The burning 
+    of fossil fuels for energy, deforestation, and industrial processes have released 
+    enormous amounts of carbon dioxide and methane into the atmosphere.
+    
+  space_exploration: |
+    Space exploration has captured human imagination for decades and continues to push the 
+    boundaries of what's possible. Since the first satellite launch in 1957 and the moon 
+    landing in 1969, humanity has made remarkable progress in understanding our universe. 
+    Modern space agencies like NASA, ESA, and private companies like SpaceX have developed 
+    advanced technologies for space travel.

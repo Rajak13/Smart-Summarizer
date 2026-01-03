@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Summarizer - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-navbar">
+        <a href="/" class="navbar-logo">
+            <div class="logo-circle">S</div>
+            <span>Smart Summarizer</span>
+        </a>
+        <div class="navbar-links">
+            <a href="/" class="nav-item active">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="/single-summary" class="nav-item">
+                <i class="fas fa-file-alt"></i> Single Summary
+            </a>
+            <a href="/comparison" class="nav-item">
+                <i class="fas fa-balance-scale"></i> Comparison
+            </a>
+            <a href="/batch" class="nav-item">
+                <i class="fas fa-layer-group"></i> Batch
+            </a>
+            <a href="/evaluation" class="nav-item">
+                <i class="fas fa-chart-bar"></i> Evaluation
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-container">
+        <h1 class="hero-title">Refined Intelligence.</h1>
+        <h1 class="hero-subtitle">Elegant Summaries.</h1>
+        
+        <p class="hero-description">A high-fidelity comparison platform for state-of-the-art NLP models.</p>
+        <p class="hero-description">Compare TextRank, BART, and PEGASUS with precision metrics.</p>
+        
+        <!-- CTA Buttons -->
+        <div class="cta-container">
+            <a href="/single-summary" class="btn-primary">Start Summarizing</a>
+            <a href="/evaluation" class="btn-secondary">View Evaluation</a>
+        </div>
+    </div>
+
+    <!-- Model Cards Section -->
+    <div class="models-container">
+        <div class="cards-grid">
+            <div class="model-card">
+                <span class="model-emoji">🎯</span>
+                <h3 class="model-name">TextRank</h3>
+                <p class="model-desc">
+                    Extractive graph-based model that identifies the most 
+                    salient sentences directly from the source.
+                </p>
+            </div>
+            
+            <div class="model-card">
+                <span class="model-emoji">💝</span>
+                <h3 class="model-name">BART</h3>
+                <p class="model-desc">
+                    Abstractive transformer-based model optimized for standard, 
+                    fluent summaries of varying length.
+                </p>
+            </div>
+            
+            <div class="model-card">
+                <span class="model-emoji">🚀</span>
+                <h3 class="model-name">PEGASUS</h3>
+                <p class="model-desc">
+                    Advanced abstractive model pre-trained specifically for 
+                    summarization tasks and gap prediction.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-left">
+            <div class="logo-circle" style="width: 24px; height: 24px; font-size: 0.9rem;">S</div>
+            <span>Smart Summarizer</span>
+        </div>
+        <div class="footer-right">
+            <span>© 2025 Smart Summarizer. Abdul Razzaq Ansari</span>
+            <a href="https://github.com/Rajak13/Smart-Summarizer" target="_blank" class="footer-link">
+                <i class="fab fa-github"></i> GitHub Repository
+            </a>
+        </div>
+    </footer>
+</body>
+</html>
