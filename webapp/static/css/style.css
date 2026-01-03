@@ -895,34 +895,6 @@ body {
     }
 }
 
-@media (prefers-color-scheme: dark) {
-    /* Optional: Add dark mode support */
-    :root {
-        --charcoal: #e5e5e5;
-        --cool-gray: #6b7280;
-        --soft-ivory: #1f2937;
-        --slate-blue: #93c5fd;
-        --card-bg: #374151;
-        --white: #111827;
-    }
-    
-    body {
-        background: var(--soft-ivory);
-        color: var(--charcoal);
-    }
-    
-    .text-input, .output-text, .model-select {
-        background: #374151;
-        color: #e5e5e5;
-        border-color: #6b7280;
-    }
-    
-    .input-section, .output-section, .model-card, .chart-section {
-        background: #374151;
-        border-color: #6b7280;
-    }
-}
-
 /* Comparison Page Styles */
 .comparison-input-section {
     background: white;
